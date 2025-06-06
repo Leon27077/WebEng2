@@ -1,0 +1,13 @@
+#cityResultsList{
+  list-style-type: none;
+}
+
+#cityResult{
+  border: 1px solid #5f9dc1;
+  width: 300px;
+}
+
+#desc{
+  font-size: 80%;
+  color: grey;
+}

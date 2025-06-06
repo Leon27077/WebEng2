@@ -1,1 +1,20 @@
-<p>search works!</p>
+<input #newInput id="cityInput" placeholder="Search for a city">
+
+<button id="searchCityButton" (click)="search(newInput.value)"></button>
+
+@if (showResults){
+<ul id="cityResultsList">
+  @for (dataSet of data; track $index){
+    <li>
+    <a routerLink="/cityWeather" routerLinkActive="active">
+      <p (click)="setLat($index); setLon($index)" id="cityResult" > </p>
+      </a>
+      <p id="city"> {{dataSet.name}}  </p>
+      <p id="desc">{{dataSet.state}}, {{dataSet.country}}</p>
+    </li>
+  }
+</ul>
+}
+
+<router-outlet></router-outlet>
+
