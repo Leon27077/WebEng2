@@ -3,11 +3,22 @@
 }
 
 #cityResult{
-  border: 1px solid #5f9dc1;
+  border: 1px solid #b5a32b;
   width: 300px;
+}
+
+#city{
+  text-decoration: none;
 }
 
 #desc{
   font-size: 80%;
   color: grey;
+  text-decoration: none;
+}
+
+#searchCityButton{
+  width: 40px;
+  height: 15px;
+  margin-left: 10px;
 }

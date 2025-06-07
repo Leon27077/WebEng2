@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef} from '@angular/core';
 import {WeatherService} from '../../services/weather.service';
 import {CommonModule} from '@angular/common';
 import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
+import {CityWeatherComponent} from '../city-weather/city-weather.component';
 
 @Component({
   selector: 'app-search',
@@ -16,21 +17,28 @@ export class SearchComponent {
   longitude: any
   showResults: boolean = false;
 
-  constructor(private weatherService: WeatherService) {
+  constructor(private weatherService: WeatherService, private cdr: ChangeDetectorRef) {
   }
 
   search(city:any) {
     this.weatherService.getInfo(city).subscribe({
       next: (data) => {
         this.data = data;
-        console.log(this.data);
         this.showResults = true;
+        console.log(this.data);
+        this.cdr.markForCheck();
+
       },
       error: (error) => {
         console.error('Fehler:', error);
         this.showResults = false;
+        this.cdr.markForCheck();
       }
     });
+  }
+
+  hideResults(){
+    this.showResults = false;
   }
 
 
