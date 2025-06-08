@@ -17,7 +17,7 @@ export class SearchComponent {
   longitude: any
   showResults: boolean = false;
 
-  constructor(private weatherService: WeatherService, private cdr: ChangeDetectorRef) {
+  constructor(protected weatherService: WeatherService, private cdr: ChangeDetectorRef) {
   }
 
   search(city:any) {

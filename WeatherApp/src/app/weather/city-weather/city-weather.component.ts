@@ -8,21 +8,11 @@ import {SearchComponent} from '../search/search.component';
   templateUrl: './city-weather.component.html',
   styleUrl: './city-weather.component.css'
 })
-export class CityWeatherComponent implements OnInit{
+export class CityWeatherComponent{
   private weather:any;
 
-  constructor(private weatherService:WeatherService, private searchComponent:SearchComponent) {
+  constructor(protected weatherService:WeatherService) {
   }
 
-   ngOnInit(){
-    this.weatherService.getWeatherByCoordinates(this.searchComponent.getLat(),this.searchComponent.getLon()).subscribe({
-      next: (data: any) => {
-        this.weather = data;
-        console.log(this.weather)
-      }
-    })
-    console.log(this.weather);
-    console.log("hi");
 
-  }
 }
