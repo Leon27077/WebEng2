@@ -8,6 +8,8 @@ import {Router} from '@angular/router';
   providedIn: 'root'
 })
 export class WeatherService {
+  private isInitialLoad = true;
+  private idx: any;
   private information: any;
   private currentWeather:any;
   private geoUrl = 'https://api.openweathermap.org/geo/1.0/direct';
@@ -50,12 +52,23 @@ export class WeatherService {
           this.weather_description = this.currentWeather.weather[0].description;
           this.wind_speed = this.currentWeather.wind.speed;
 
-          const currentUrl = this.router.url;
-          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-            this.router.navigate([currentUrl]);
-          });
+          if (this.isInitialLoad) {
+            const currentUrl = this.router.url;
+            this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+              this.router.navigate([currentUrl]);
+            });
+            this.isInitialLoad = false;
+          }
         }
       })
+  }
+
+  public setIdx(idx: number){
+    this.idx = idx;
+  }
+
+  public getIdx(){
+    return this.idx;
   }
 
   public isHideWeather(){
