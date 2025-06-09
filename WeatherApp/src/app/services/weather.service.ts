@@ -23,6 +23,7 @@ export class WeatherService {
   private weather_description: any;
   private wind_speed: any;
 
+  private hide_weather:boolean = false;
 
 
   constructor(private http: HttpClient, private router: Router) { }
@@ -32,29 +33,37 @@ export class WeatherService {
     return this.information;
   }
 
-  getWeatherByCoordinates(lat:number, lon:number){
-    this.currentWeather = this.http.get(`${this.weatherUrl}?lat=${lat}&lon=${lon}&appid=${this.apiKey}`);
-    this.currentWeather.subscribe({
-      next: (data: any) => {
-        this.currentWeather = data;
-        console.log(this.currentWeather);
-        this.dt = this.currentWeather.dt;
-        this.feels_like = this.currentWeather.main.feels_like;
-        this.humidity = this.currentWeather.main.humidity;
-        this.temp = this.currentWeather.main.temp;
-        this.sunrise = this.currentWeather.sys.sunrise;
-        this.sunset = this.currentWeather.sys.sunset;
-        this.timezone = this.currentWeather.timezone;
-        this.visibility = this.currentWeather.visibility;
-        this.weather_description = this.currentWeather.weather[0].description;
-        this.wind_speed = this.currentWeather.wind.speed;
+  getWeatherByCoordinates(lat:number, lon:number) {
+      this.currentWeather = this.http.get(`${this.weatherUrl}?lat=${lat}&lon=${lon}&appid=${this.apiKey}`);
+      this.currentWeather.subscribe({
+        next: (data: any) => {
+          this.currentWeather = data;
+          console.log(this.currentWeather);
+          this.dt = this.currentWeather.dt;
+          this.feels_like = this.currentWeather.main.feels_like;
+          this.humidity = this.currentWeather.main.humidity;
+          this.temp = this.currentWeather.main.temp;
+          this.sunrise = this.currentWeather.sys.sunrise;
+          this.sunset = this.currentWeather.sys.sunset;
+          this.timezone = this.currentWeather.timezone;
+          this.visibility = this.currentWeather.visibility;
+          this.weather_description = this.currentWeather.weather[0].description;
+          this.wind_speed = this.currentWeather.wind.speed;
 
-        const currentUrl = this.router.url;
-        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          this.router.navigate([currentUrl]);
-        });
-      }
-    })
+          const currentUrl = this.router.url;
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+            this.router.navigate([currentUrl]);
+          });
+        }
+      })
+  }
+
+  public isHideWeather(){
+    return this.hide_weather;
+  }
+
+  public setHideWeather(bool: boolean){
+    this.hide_weather = bool;
   }
 
   public get_dt(){
