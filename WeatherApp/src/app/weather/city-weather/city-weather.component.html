@@ -1,5 +1,14 @@
 @if (!weatherService.isHideWeather()){
 
-<p>{{weatherService.get_dt()}}</p>
+  <p>Daytime: {{weatherService.getDt()}}</p>
+  <p>Temp: {{weatherService.getTemp()}}</p>
+  <p>Feels like: {{weatherService.getFeelsLike()}}</p>
+  <p>Humidity: {{weatherService.getHumidity()}}</p>
+  <p>Sunrise: {{weatherService.getSunrise()}}</p>
+  <p>Sunset: {{weatherService.getSunset()}}</p>
+  <p>Visibility: {{weatherService.getVisibility()}}</p>
+  <p>Windspeed: {{weatherService.getWindSpeed()}}</p>
+  <p>Weather description:{{weatherService.getWeatherDescription()}}</p>
+
 <p>city-weather works!</p>
 }

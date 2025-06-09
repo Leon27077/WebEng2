@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
+
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,6 @@ export class WeatherService {
   private visibility: any;
   private weather_description: any;
   private wind_speed: any;
-
   private hide_weather:boolean = false;
 
 
@@ -66,35 +66,44 @@ export class WeatherService {
     this.hide_weather = bool;
   }
 
-  public get_dt(){
-    return this.dt;
+  public calculateTime(dt: any, timezone: any){
+    const utcDate = new Date(dt*1000);
+    const localOffset = utcDate.getTimezoneOffset() * 60;
+    const finalDate = new Date((this.dt + timezone + localOffset)*1000);
+    return finalDate.toLocaleString();
+
   }
 
-  public get_feels_like(){
-    return this.feels_like;
+  public getDt(){
+    return this.dt;
+    //return this.calculateTime(this.dt,this.timezone);
   }
-  public get_humidity(){
+
+  public getFeelsLike(){
+    return this.feels_like -273.15;
+  }
+  public getHumidity(){
     return this.humidity;
   }
-  public get_temp(){
-    return this.temp;
+  public getTemp(){
+    return this.temp -273.15;
   }
-  public get_sunrise(){
-    return this.sunrise;
+  public getSunrise(){
+    return this.calculateTime(this.sunrise, this.timezone);
   }
-  public get_sunset(){
-    return this.sunset;
+  public getSunset(){
+    return this.calculateTime(this.sunset, this.timezone);
   }
-  public get_timezone(){
+  public getTimezone(){
     return this.timezone;
   }
-  public get_visibility(){
+  public getVisibility(){
     return this.visibility;
   }
-  public get_weather_description(){
+  public getWeatherDescription(){
     return this.weather_description;
   }
-  public get_wind_speed(){
+  public getWindSpeed(){
     return this.wind_speed;
   }
 
