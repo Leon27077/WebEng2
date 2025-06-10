@@ -1,8 +1,9 @@
-import { Component, ChangeDetectorRef} from '@angular/core';
+import {Component, ChangeDetectorRef} from '@angular/core';
 import {WeatherService} from '../../services/weather.service';
 import {CommonModule} from '@angular/common';
 import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import {NavigationStackService} from '../../services/navigation-stack.service';
 
 @Component({
   selector: 'app-search',
@@ -10,7 +11,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './search.component.html',
   styleUrl: './search.component.css'
 })
-export class SearchComponent {
+export class SearchComponent{
   searchValue:any;
   location: any;
   data: any[] = [];
@@ -18,8 +19,10 @@ export class SearchComponent {
   longitude: any
   showResults: boolean = false;
 
-  constructor(protected weatherService: WeatherService, private cdr: ChangeDetectorRef) {
+  constructor(protected weatherService: WeatherService, private cdr: ChangeDetectorRef, protected navigationStack: NavigationStackService) {
   }
+
+
 
 
   search(city:any) {
