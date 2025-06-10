@@ -63,10 +63,16 @@ export class WeatherService {
       })
   }
 
+
   addToNavigationStack(navigation: [lat:number, lon:number]){
 
 
   }
+
+  public resetInitialLoad() {
+    this.isInitialLoad = true;
+  }
+
 
   public setIdx(idx: number){
     this.idx = idx;

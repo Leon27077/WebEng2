@@ -19,7 +19,7 @@ export class SearchComponent{
   longitude: any
   showResults: boolean = false;
 
-  constructor(protected weatherService: WeatherService, private cdr: ChangeDetectorRef, protected navigationStack: NavigationStackService) {
+  constructor(protected weatherService: WeatherService, private cdr: ChangeDetectorRef) {
   }
 
 
