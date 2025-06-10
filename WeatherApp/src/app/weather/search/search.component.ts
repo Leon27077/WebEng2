@@ -53,12 +53,12 @@ export class SearchComponent{
 
   setLat(idx:number){
     this.latitude = this.data[idx].lat;
-    localStorage.setItem("lat", String(this.latitude));
+    sessionStorage.setItem("lat", String(this.latitude));
   }
 
   setLon(idx:number){
     this.longitude = this.data[idx].lon;
-    localStorage.setItem("lon", String(this.longitude));
+    sessionStorage.setItem("lon", String(this.longitude));
   }
 
   getLat(){

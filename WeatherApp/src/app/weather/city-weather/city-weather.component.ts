@@ -19,13 +19,11 @@ export class CityWeatherComponent implements OnInit{
     const navEntries = performance.getEntriesByType("navigation") as PerformanceNavigationTiming[];
     if (navEntries.length > 0 && navEntries[0].type === "reload") {
       console.log("Seite wurde aktualisiert!");
-          this.weatherService.getWeatherByCoordinates(Number(localStorage.getItem("lat")), Number(localStorage.getItem("lon")));
+          this.weatherService.getWeatherByCoordinates(Number(sessionStorage.getItem("lat")), Number(sessionStorage.getItem("lon")));
 
         }
       }
-
-
-  }
+}
 
 
 
