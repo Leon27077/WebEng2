@@ -14,6 +14,7 @@ export class WeatherService {
   private currentWeather:any;
   private geoUrl = 'https://api.openweathermap.org/geo/1.0/direct';
   private weatherUrl = 'https://api.openweathermap.org/data/2.5/weather';
+  private forecastUrl = 'https://pro.openweathermap.org/data/2.5/forecast'
   private apiKey = '89836a59d86d39b9fc8e232f73d7c2ce';
   private dt: any;
   private feels_like: any;
@@ -27,6 +28,12 @@ export class WeatherService {
   private wind_speed: any;
   private hide_weather:boolean = false;
 
+  private current_day:any = [];
+  private first_day:any = [];
+  private second_day:any = [];
+  private third_day:any= [];
+  private fourth_day:any= [];
+  private fifth_day:any = []
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -64,10 +71,38 @@ export class WeatherService {
   }
 
 
-  addToNavigationStack(navigation: [lat:number, lon:number]){
+  getForecastByCoordinates(lat:number, lon:number){
+    this.http.get(`${this.forecastUrl}?lat=${lat}&lon=${lon}&appid=${this.apiKey}`).subscribe({
+      next: (data:any) => {
+        for (let item of data.list){
+          let itemDate: Date = new Date(item.dt*1000)
+        if (itemDate.toLocaleString().split(',')[0] == new Date().toLocaleString().split(',')[0]){
+          this.current_day = [...this.current_day, [this.getDayByInt(itemDate.getDay()),itemDate.toLocaleString().split(',')[1] ,this.roundTemp(item.main.temp), item.weather[0].icon]];
 
 
+        }
+      }
+      }
+    })
   }
+
+  private getDayByInt(int: number): string {
+    switch (int) {
+      case 0: return 'Sonntag';
+      case 1: return 'Montag';
+      case 2: return 'Dienstag';
+      case 3: return 'Mittwoch';
+      case 4: return 'Donnerstag';
+      case 5: return 'Freitag';
+      case 6: return 'Samstag';
+      default: return 'Ungültiger Tag';
+    }
+  }
+
+  private roundTemp(temp: number):number{
+    return Math.round(temp - 273.15);
+  }
+
 
   public resetInitialLoad() {
     this.isInitialLoad = true;
