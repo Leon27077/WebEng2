@@ -75,15 +75,45 @@ export class WeatherService {
     this.http.get(`${this.forecastUrl}?lat=${lat}&lon=${lon}&appid=${this.apiKey}`).subscribe({
       next: (data:any) => {
         for (let item of data.list){
+          let date = new Date();
           let itemDate: Date = new Date(item.dt*1000)
-        if (itemDate.toLocaleString().split(',')[0] == new Date().toLocaleString().split(',')[0]){
-          this.current_day = [...this.current_day, [this.getDayByInt(itemDate.getDay()),itemDate.toLocaleString().split(',')[1] ,this.roundTemp(item.main.temp), item.weather[0].icon]];
-
-
+        if (this.checkForDay(0, itemDate, date)){
+          this.current_day = this.saveDate(this.current_day, itemDate, item);
+        }
+        else if(this.checkForDay(1, itemDate, date)){
+          this.first_day = this.saveDate(this.first_day, itemDate, item);
+          console.log(this.first_day)
+        }
+        else if(this.checkForDay(2, itemDate, date)){
+          this.second_day = this.saveDate(this.second_day, itemDate, item);
+      }
+        else if(this.checkForDay(3, itemDate, date)){
+          this.third_day = this.saveDate(this.third_day, itemDate, item);
+      }
+        else if(this.checkForDay(4, itemDate, date)){
+          this.fourth_day = this.saveDate(this.fourth_day, itemDate, item);
+    }
+        else if(this.checkForDay(5, itemDate, date)) {
+          this.fifth_day = this.saveDate(this.fifth_day, itemDate, item);
+        }
         }
       }
-      }
-    })
+    }
+        )
+  }
+  private getWeatherIconByCode(iconCode:string){
+    return this.http.get('https://openweathermap.org/img/wn/{iconCode}@2x.png');
+
+  }
+
+  private checkForDay(day: number, itemDate: Date, date: Date){
+    let compareDate = new Date(date);
+    compareDate.setDate(date.getDate() + day);
+    return itemDate.toLocaleString().split(',')[0] === compareDate.toLocaleString().split(',')[0]
+  }
+
+  private saveDate(li: any, itemDate:Date, item:any){
+    return [...li, [this.getDayByInt(itemDate.getDay()), itemDate.toLocaleString().split(',')[1], this.roundTemp(item.main.temp), item.weather[0].icon]]
   }
 
   private getDayByInt(int: number): string {
