@@ -11,5 +11,12 @@
   <p>Weather description:{{weatherService.getWeatherDescription()}}</p>
 
 
+  @for (elem of getForecastByNumber(this.forecast_num); track elem){
+    <p>{{elem[0]}} - {{elem[1]}} - {{elem[2]}}°C</p>
+
+  }
+
+  <p>{{this.weatherService.getFirstDay()}}</p>
+
 <p>city-weather works!</p>
 }

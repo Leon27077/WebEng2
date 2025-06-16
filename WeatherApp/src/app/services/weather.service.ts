@@ -101,6 +101,33 @@ export class WeatherService {
     }
         )
   }
+
+
+  public getCurrentDay(){
+    return this.current_day;
+  }
+
+  public getFirstDay(){
+    return this.first_day;
+  }
+
+  public getSecondDay(){
+    return this.second_day;
+  }
+
+  public getThirdDay(){
+    return this.third_day;
+  }
+
+  public getFourthDay(){
+    return this.fourth_day;
+  }
+
+  public getFifthDay(){
+    return this.fifth_day;
+  }
+
+
   private getWeatherIconByCode(iconCode:string){
     return this.http.get('https://openweathermap.org/img/wn/{iconCode}@2x.png');
 
@@ -113,7 +140,7 @@ export class WeatherService {
   }
 
   private saveDate(li: any, itemDate:Date, item:any){
-    return [...li, [this.getDayByInt(itemDate.getDay()), itemDate.toLocaleString().split(',')[1], this.roundTemp(item.main.temp), item.weather[0].icon]]
+    return [...li, [this.getDayByInt(itemDate.getDay()), itemDate.toLocaleString().split(',')[1], this.roundTemp(item.main.temp), item.weather[0].icon]];
   }
 
   private getDayByInt(int: number): string {
