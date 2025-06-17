@@ -1,4 +1,4 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {WeatherService} from '../../services/weather.service';
 import {ActivatedRoute} from '@angular/router';
 
@@ -13,7 +13,11 @@ export class CityWeatherComponent implements OnInit{
   protected forecast_num: number = 0;
 
 
-  constructor(protected weatherService:WeatherService, protected route: ActivatedRoute) {
+  constructor(protected weatherService:WeatherService, protected route: ActivatedRoute, private cdr: ChangeDetectorRef) {
+    this.weatherService.forecastUpdated$.subscribe(() => {
+      this.cdr.detectChanges();
+    });
+
   }
 
   ngOnInit() {
@@ -21,6 +25,7 @@ export class CityWeatherComponent implements OnInit{
     if (navEntries.length > 0 && navEntries[0].type === "reload") {
       console.log("Seite wurde aktualisiert!");
           this.weatherService.getWeatherByCoordinates(Number(sessionStorage.getItem("lat")), Number(sessionStorage.getItem("lon")));
+          this.weatherService.getForecastByCoordinates(Number(sessionStorage.getItem("lat")), Number(sessionStorage.getItem("lon")));
         }
       }
 

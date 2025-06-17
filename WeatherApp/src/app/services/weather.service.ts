@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
 
 @Injectable({
@@ -34,6 +35,10 @@ export class WeatherService {
   private third_day:any= [];
   private fourth_day:any= [];
   private fifth_day:any = []
+
+  private forecastUpdated = new BehaviorSubject<boolean>(false);
+  forecastUpdated$ = this.forecastUpdated.asObservable();
+
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -72,6 +77,7 @@ export class WeatherService {
 
 
   getForecastByCoordinates(lat:number, lon:number){
+    this.first_day = [];
     this.http.get(`${this.forecastUrl}?lat=${lat}&lon=${lon}&appid=${this.apiKey}`).subscribe({
       next: (data:any) => {
         for (let item of data.list){
@@ -97,6 +103,7 @@ export class WeatherService {
           this.fifth_day = this.saveDate(this.fifth_day, itemDate, item);
         }
         }
+        this.forecastUpdated.next(true);
       }
     }
         )
